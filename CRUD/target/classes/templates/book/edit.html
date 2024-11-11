@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить книгу</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            margin: 0 auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/book/{id}(id=${book.getId()})}" th:object="${book}">
+    <h1>Редактирование информации о книге</h1>
+    <label for="name">Измените название: </label>
+    <input type="text" th:field="*{title}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Books Error</div>
+    <br/>
+    <label for="author">Измените автора: </label>
+    <input type="text" th:field="*{author}" id="author">
+    <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Books Error</div>
+    <br/>
+    <label for="dateOfPublishing">Измените год выпуска: </label>
+    <input type="text" th:field="*{dateOfPublishing}" id="dateOfPublishing">
+    <div style="color: red" th:if="${#fields.hasErrors('dateOfPublishing')}" th:errors="*{dateOfPublishing}">Books Error</div>
+    <br/>
+    <input type="submit" value="Редактировать">
+</form>
+<div style="position: fixed; top: 10px; right: 10px;">
+    <button style="background-color: blue; color: white; padding: 10px 20px; font-size: 16px;" onclick="window.location.href = '/main-page';">Logout</button>
+</div>
+
+</body>
+</html>

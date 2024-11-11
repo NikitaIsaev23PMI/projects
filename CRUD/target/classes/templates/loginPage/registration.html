@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Регистрация нового пользователя</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-bottom: 15px;
+            color: red;
+            font-size: 14px;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>Регистрация</h1>
+    <form th:method="POST" th:action="@{/new-user}" th:object="${user}">
+        <div class="input-group">
+            <label for="username">Введите имя пользователя:</label>
+            <input type="text" th:field="*{username}" id="username">
+            <div class="message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка: неверное имя пользователя</div>
+        </div>
+        <div class="input-group">
+            <label for="password">Пароль:</label>
+            <input type="password" th:field="*{password}" id="password">
+            <div class="message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка: неверный пароль</div>
+        </div>
+        <input type="submit" value="Зарегистрироваться">
+    </form>
+    <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+</div>
+</body>
+</html>

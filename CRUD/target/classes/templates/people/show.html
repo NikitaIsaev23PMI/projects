@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница человека</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        p {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        span {
+            color: #555;
+            font-size: 16px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<p th:text="${'Читатель с именем ' + people.getName()}"></p>
+<p th:text="${'С датой рождения ' + people.getDateOfBirth()}"></p>
+<p th:text="${'С номером телефона ' + people.getNumber()}"></p>
+<p th:text="${'С email-ом ' + people.getEmail()}"></p>
+<br/>
+
+<div th:if="${noBooks}">
+    <span>Человек пока не взял ни одной книги</span>
+</div>
+<div th:if="${books}">
+    <span>Список книг человека</span>
+    <div th:each="book : ${books}">
+        <a th:href="@{/book/{id}(id=${book.getId()})}"
+           th:text="${book.getTitle()}"
+           th:style="${book.expiredOrNot} ? 'color: red;' : 'color: black;'"></a>
+    </div>
+</div>
+
+</div>
+<br/>
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${people.getId()})}" th:object="${people}">
+    <input type="submit" value="Изменить">
+</form>
+<br/>
+<form th:method="DELETE" th:action="@{/people/{id}(id=${people.getId()})}" th:object="${people}">
+    <input type="submit" value="Удалить">
+</form>
+<div style="position: fixed; top: 10px; right: 10px;">
+    <button style="background-color: blue; color: white; padding: 10px 20px; font-size: 16px;" onclick="window.location.href = '/main-page';">Logout</button>
+</div>
+</body>
+</html>

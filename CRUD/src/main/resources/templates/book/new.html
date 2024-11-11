@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая книга</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            padding: 8px 20px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<form th:method="POST" th:action="@{/book}" th:object="${book}">
+    <label for="name">Название книги:</label>
+    <input type="text" th:field="*{title}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Books Error</div>
+    <label for="author">Автор:</label>
+    <input type="text" th:field="*{author}" id="author">
+    <div style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Books Error</div>
+    <label for="age">Год издания:</label>
+    <input type="date" th:field="*{dateOfPublishing}" id="age">
+    <div style="color: red" th:if="${#fields.hasErrors('dateOfPublishing')}" th:errors="*{dateOfPublishing}">Books Error</div>
+    <label for="count">Введите колличество добавляемых книг: </label>
+    <input type="text" name="count" id="count">
+    <input type="submit" value="Добавить">
+</form>
+<div style="position: fixed; top: 10px; right: 10px;">
+    <button style="background-color: blue; color: white; padding: 10px 20px; font-size: 16px;" onclick="window.location.href = '/main-page';">Logout</button>
+</div>
+</body>
+</html>

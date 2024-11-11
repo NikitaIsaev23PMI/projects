@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все читатели</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .reader-list {
+            margin: 20px 0;
+        }
+
+        .reader {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s;
+        }
+
+        .reader:hover {
+            background-color: #eaeaea;
+        }
+
+        .add-button {
+            margin-top: 20px;
+        }
+
+        .add-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #337ab7;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .add-button a:hover {
+            background-color: #23527c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Все читатели</h2>
+    <div class="reader-list">
+        <div th:each="people : ${peoples}" class="reader">
+            <a th:href="@{/people/{id}(id=${people.getId()})}" th:text="${people.getName()}"></a>
+        </div>
+    </div>
+    <div class="add-button">
+        <a href="/people/new">Добавить нового читателя</a>
+    </div>
+</div>
+<div style="position: fixed; top: 10px; right: 10px;">
+    <button style="background-color: blue; color: white; padding: 10px 20px; font-size: 16px;" onclick="window.location.href = '/main-page';">Logout</button>
+</div>
+</body>
+</html>

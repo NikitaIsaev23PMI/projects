@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница книги</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            padding: 20px;
+            background-color: #e9ecef;
+        }
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            margin-top: 15px;
+        }
+        input[type="submit"] {
+            padding: 10px 25px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        select {
+            padding: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        a {
+            text-decoration: none;
+            color: #28a745;
+        }
+        a:hover {
+            color: #218838;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p th:text="${'Книга: ' + book.getTitle()}"></p>
+    <p th:text="${'Автор: ' + book.getAuthor()}"></p>
+    <p th:text="${'Год издания: ' + book.getDateOfPublishing()}"></p>
+    <p th:if="${book.isExpiredOrNot()}" class="expired">Книга просрочена</p>
+    <br/>
+    <div th:if="${AllPeoples}">
+        <span>Книга свободна</span>
+        <form th:method="PATCH" th:action="@{/book/{id}/newOwner(id=${book.getId()})}" th:object="${people}">
+            <label for="people">Выберите владельца</label>
+            <select th:object="${people}" th:field="*{id}" id="people">
+                <option th:each="person : ${AllPeoples}" th:value="${person.getId()}" th:text="${person.getName()}"></option>
+            </select>
+            <div style="color: red" th:if="${#fields.hasErrors('books')}" th:errors="*{books}">Books Error</div>
+            <input type="submit" value="Выбрать">
+        </form>
+    </div>
+    <div th:if="${owner}">
+        <a th:href="@{/people/{id}(id=${owner.getId()})}" th:text="${'Книга сейчас у ' + owner.getName()}"></a>
+        <br/>
+        <form th:method="PATCH" th:action="@{/book/{id}/deleteOwner(id=${book.getId()})}" th:object="${book}">
+            <input type="submit" value="Освободить">
+        </form>
+    </div>
+    <form th:method="DELETE" th:action="@{/book/{id}(id=${book.getId()})}">
+        <input type="submit" value="Удалить книгу">
+    </form>
+    <br/>
+</div>
+<div style="position: fixed; top: 10px; right: 10px;">
+    <button style="background-color: blue; color: white; padding: 10px 20px; font-size: 16px;" onclick="window.location.href = '/main-page';">Logout</button>
+</div>
+</body>
+</html>
